@@ -1,9 +1,6 @@
 def garden_operations(*, int_str=None, div=None, file=None,
                       plant=None) -> None:
-    """
-        Function that tests for errors, produces them,
-        and does not prevent them.
-    """
+    """Tests for errors, produces them, and does not prevent them."""
     if int_str is not None:
         int(int_str)
 
