@@ -1,7 +1,17 @@
 import sys
 
 
-def score_analytics():
+def score_analytics() -> None:
+    """
+        Adds the given arguments if they are all valid,
+            otherwise displays an error message and stops the program.
+
+        Return: Returns None if arguments are invalid.
+
+        Raises:
+            ValueError: If one of the arguments are invalid or
+                if no score are provided.
+    """
     print("=== Player Score Analytics ===")
     try:
         if (len(sys.argv) == 1):

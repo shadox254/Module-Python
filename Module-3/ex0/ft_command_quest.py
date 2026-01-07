@@ -1,7 +1,7 @@
 import sys
 
 
-def command_quest():
+def command_quest() -> None:
     """Displays and counts all given arguments."""
     print("=== Command Quest ===")
     if len(sys.argv) == 1:

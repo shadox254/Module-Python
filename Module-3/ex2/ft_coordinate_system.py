@@ -2,7 +2,22 @@ import sys
 import math
 
 
-def str_coordinates(first_coord: tuple):
+def display_distance_from_input(first_coord: tuple | str) -> None:
+    """
+        Check the value of first_coord.
+        If it is a number, run the program as it should.
+        Otherwise, display an error message without crashing the program.
+
+        Arg:
+            first_coord (tuple | str): corresponds to coordinates
+                in the form of a tuple or character string.
+
+        Return: Returns None if first_coord is invalid.
+
+        Raise:
+            ValueError: If in first_coord, there is something different
+                from a number.
+    """
     coord_tuple = ()
     if isinstance(first_coord, tuple):
         coord_tuple: tuple = first_coord
@@ -32,32 +47,48 @@ def str_coordinates(first_coord: tuple):
 
 
 def distance(coord1: tuple, coord2: tuple = (0, 0, 0)) -> float:
+    """
+        Calculates the distance between the first coordinates and the
+        second coordinates.
+
+        Args:
+            coord1 (tuple): tuple of int corresponding to the coordinates
+                of the first point.
+            coord2 (tuple): tuple of int corresponding to the coordinates
+                of the second point, with the base tuple equal to (0, 0, 0).
+
+        Return: Returns the distance between the two points as a float.
+    """
     x1, y1, z1 = coord1
     x2, y2, z2 = coord2
     distance = math.sqrt((x2-x1)**2 + (y2-y1)**2 + (z2-z1)**2)
     return distance
 
 
-def coordinate_system():
+def coordinate_system() -> None:
+    """
+        Perform several tests with display_distance_from_input to see different
+            behaviors of the function and if there are any crashes.
+    """
     test1 = (10, 20, 5)
-    str_coordinates(test1)
+    display_distance_from_input(test1)
     print()
 
     test2 = ("3,4,0")
-    str_coordinates(test2)
+    display_distance_from_input(test2)
     print()
 
     test3 = ("abc,def,ghi")
-    str_coordinates(test3)
+    display_distance_from_input(test3)
     print()
 
     if len(sys.argv) > 1:
         if len(sys.argv) == 2:
-            str_coordinates(sys.argv[1])
+            display_distance_from_input(sys.argv[1])
             print()
         elif len(sys.argv) == 4:
             args_tuple = (int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
-            str_coordinates(args_tuple)
+            display_distance_from_input(args_tuple)
             print()
         else:
             print(f"Invalid number of arguments. Usage: python3 {sys.argv[0]} "
