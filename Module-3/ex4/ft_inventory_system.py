@@ -34,31 +34,27 @@ def transaction(giver: str, receiver: str, players_inv: dict, item: str, quantit
         print()
         return None
 
-    if players_inv[giver]['potion']['quantity'] >= quantity_to_give and item in players_inv[giver]:
+    if item in players_inv[giver] and players_inv[giver][item]['quantity'] >= quantity_to_give:
         print("Transaction successful!")
     elif item not in players_inv[giver]:
         print(f"Transaction canceled! {giver.capitalize()} does not own {item}")
         print()
         return None
     else:
-        print(f"Transaction failed! {giver.capitalize()} does not have enough potion.")
+        print(f"Transaction failed! {giver.capitalize()} does not have enough {item}.")
         print()
         return None
     print()
 
     print("=== Updated Inventories ===")
-    new_giver_quantity = players_inv[giver][item]['quantity'] - quantity_to_give
-    new_giver_inv = players_inv[giver].copy()
-    new_giver_inv[item]['quantity'] = new_giver_quantity
-    new_receiver_inv = players_inv[receiver].copy()
+    players_inv[giver][item]['quantity'] -= quantity_to_give
+    
     if item in players_inv[receiver]:
-        new_receiver_quantity = players_inv[receiver][item]['quantity'] + quantity_to_give
+        players_inv[receiver][item]['quantity'] += quantity_to_give
     else:
-        new_receiver_quantity = quantity_to_give
-        new_receiver_inv[item] = players_inv[giver][item]
-        new_receiver_inv[item]['quantity'] = new_receiver_quantity
-    players_inv[giver].update(new_giver_inv)
-    players_inv[receiver].update(new_receiver_inv)
+        players_inv[receiver][item] = players_inv[giver][item].copy()
+        players_inv[receiver][item]['quantity'] = quantity_to_give
+
     if quantity_to_give > 1:
         print(f"{giver.capitalize()} {item}s: {players_inv[giver][item]['quantity']}")
         print(f"{receiver.capitalize()} {item}s: {players_inv[receiver][item]['quantity']}")
@@ -66,12 +62,34 @@ def transaction(giver: str, receiver: str, players_inv: dict, item: str, quantit
         print(f"{giver.capitalize()} {item}: {players_inv[giver][item]['quantity']}")
         print(f"{receiver.capitalize()} {item}: {players_inv[receiver][item]['quantity']}")
     print()
-    print()
-    print()
-    print()
-    print()
-    print_inventory("alice", players_inv["alice"])
-    print_inventory("bob", players_inv["bob"])
+
+
+def inventory_analytics(players_inv):
+    print("=== Inventory Analytics ===")
+    highest_value = 0
+    for player, inventory in players_inv.items():
+        current_player_value = 0
+        for item in inventory.values():
+            current_player_value += item['price'] * item['quantity']
+        if current_player_value > highest_value:
+            highest_value = current_player_value
+            mvp = player
+    print(f"Most valuable player: {mvp.capitalize()} ({highest_value} gold)")
+
+    max_quantity = 0
+    for player, inventory in players_inv.items():
+        current_quantity = sum(item['quantity'] for item in inventory.values())
+        if current_quantity > max_quantity:
+            max_quantity = current_quantity
+            most_items_player = player
+    print(f"Most items: {most_items_player.capitalize()} ({max_quantity} items)")
+
+    rarest_items = []
+    for inventory in players_inv.values():
+        for item, item_stats in inventory.items():
+            if item_stats['rarity'] == "rare":
+                rarest_items.append(item)
+    print(f"Rarest items: {', '.join(rarest_items)}")
 
 
 def inventory_system(players_inv) -> None:
@@ -79,7 +97,7 @@ def inventory_system(players_inv) -> None:
     print()
     print_inventory("alice", players_inv["alice"])
     transaction("alice", "bob", players_inv, "potion", 2)
-    # print_inventory("alice", players_inv["alice"])
+    inventory_analytics(players_inv)
 
 
 if __name__ == "__main__":
@@ -90,10 +108,9 @@ if __name__ == "__main__":
             "shield": {"type": "armor", "rarity": "uncommon", "price": 200, "quantity": 1}
         },
         "bob": {
-            "Wizard's staff": {"type": "weapon", "rarity": "uncommon", "price": 300, "quantity": 1},
-            "magic_ring": {"type": "weapon", "rarity": "rare", "price": 750, "quantity": 1},
-            "cloak": {"type": "armor", "rarity": "common", "price": 150, "quantity": 1},
-            "mana potion": {"type": "potion", "rarity": "uncommon", "price": 50, "quantity": 7}
+            "Wizard's staff": {"type": "weapon", "rarity": "uncommon", "price": 150, "quantity": 1},
+            "magic_ring": {"type": "weapon", "rarity": "rare", "price": 300, "quantity": 1},
+            "cloak": {"type": "armor", "rarity": "common", "price": 100, "quantity": 1},
         }
     }
     inventory_system(players_inv)
