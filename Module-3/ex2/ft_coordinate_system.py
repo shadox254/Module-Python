@@ -74,33 +74,37 @@ def coordinate_system() -> None:
     display_distance_from_input(test1)
     print()
 
-    test2 = ("3,4,0")
+    test2 = ("3,4,f")
     display_distance_from_input(test2)
     print()
 
     test3 = ("abc,def,ghi")
     display_distance_from_input(test3)
+
+    # print()
+    # if len(sys.argv) > 1:
+    #     if len(sys.argv) == 2:
+    #         display_distance_from_input(sys.argv[1])
+    #         print()
+    #     elif len(sys.argv) == 4:
+    #         args_tuple = (int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
+    #         display_distance_from_input(args_tuple)
+    #         print()
+    #     else:
+    #         print(f"Invalid number of arguments. Usage: python3 {sys.argv[0]} "
+    #               "<x> <y> <z> OR <\"x,y,z\">")
+    #         print()
+
     print()
-
-    if len(sys.argv) > 1:
-        if len(sys.argv) == 2:
-            display_distance_from_input(sys.argv[1])
-            print()
-        elif len(sys.argv) == 4:
-            args_tuple = (int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
-            display_distance_from_input(args_tuple)
-            print()
-        else:
-            print(f"Invalid number of arguments. Usage: python3 {sys.argv[0]} "
-                  "<x> <y> <z> OR <\"x,y,z\">")
-            print()
-
     print("Unpacking demonstration:")
     coord = test2.split(",")
-    coord_tuple = tuple(int(number) for number in coord)
-    x1, y1, z1 = coord_tuple
-    print(f"Player at x={x1}, y={y1}, z={z1}")
-    print(f"Coordinates: X={x1}, Y={y1}, Z={z1}")
+    try:
+        coord_tuple = tuple(int(number) for number in coord)
+        x1, y1, z1 = coord_tuple
+        print(f"Player at x={x1}, y={y1}, z={z1}")
+        print(f"Coordinates: X={x1}, Y={y1}, Z={z1}")
+    except ValueError:
+        print("Error: Unable to unpack, coordinates contain invalid characters.")
 
 
 if __name__ == "__main__":

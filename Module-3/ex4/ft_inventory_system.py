@@ -98,6 +98,9 @@ def inventory_system(players_inv) -> None:
     print_inventory("alice", players_inv["alice"])
     transaction("alice", "bob", players_inv, "potion", 2)
     inventory_analytics(players_inv)
+    print_inventory("alice", players_inv["alice"])
+    print_inventory("bob", players_inv["bob"])
+    
 
 
 if __name__ == "__main__":
