@@ -74,26 +74,28 @@ def coordinate_system() -> None:
     display_distance_from_input(test1)
     print()
 
-    test2 = ("3,4,f")
+    test2 = ("3,4,5")
     display_distance_from_input(test2)
     print()
 
     test3 = ("abc,def,ghi")
     display_distance_from_input(test3)
 
-    # print()
-    # if len(sys.argv) > 1:
-    #     if len(sys.argv) == 2:
-    #         display_distance_from_input(sys.argv[1])
-    #         print()
-    #     elif len(sys.argv) == 4:
-    #         args_tuple = (int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
-    #         display_distance_from_input(args_tuple)
-    #         print()
-    #     else:
-    #         print(f"Invalid number of arguments. Usage: python3 {sys.argv[0]} "
-    #               "<x> <y> <z> OR <\"x,y,z\">")
-    #         print()
+    print()
+    if len(sys.argv) > 1:
+        if len(sys.argv) == 2:
+            display_distance_from_input(sys.argv[1])
+        elif len(sys.argv) == 4:
+            try:
+                args_tuple = (int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
+                display_distance_from_input(args_tuple)
+            except ValueError as e:
+                print(f"Parsing invalid coordinates: \"{sys.argv[1]},{sys.argv[2]},{sys.argv[3]}\"\n"
+                      f"Error parsing coordinates: {e}'\n"
+                      f"Error details - Type: ValueError, Args: (\"{e}\",)")
+        else:
+            print(f"Invalid number of arguments. Usage: python3 {sys.argv[0]} "
+                  "<x> <y> <z> OR <\"x,y,z\">")
 
     print()
     print("Unpacking demonstration:")

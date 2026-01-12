@@ -1,6 +1,10 @@
 def print_inventory(player: str, inventory: dict) -> None:
-    """
+    """Displays the inventory of the specified player.
     
+        Args:
+            player (str): The player whose inventory you want to display.
+            inventory (dict): A dictionary containing the inventories of
+                all players.
     """
     print(f"=== {player.capitalize()}'s Inventory ===")
     inventory_value = 0
@@ -8,8 +12,8 @@ def print_inventory(player: str, inventory: dict) -> None:
     weapon_count = 0
     consumable_count = 0
     armor_count = 0
-    
-    for item, item_stats in inventory.items():
+    for item in inventory:
+        item_stats = inventory[item]
         item_price = int(item_stats['quantity'])*int(item_stats['price'])
         print(f"{item} ({item_stats['type']}, {item_stats['rarity']}): {item_stats['quantity']}x @ {item_stats['price']} gold each = {item_price} gold")
         if item_stats['type'] == "weapon":
@@ -28,8 +32,21 @@ def print_inventory(player: str, inventory: dict) -> None:
 
 
 def transaction(giver: str, receiver: str, players_inv: dict, item: str, quantity_to_give: int) -> None:
-    giver_inv = players_inv.get(giver)
-    
+    """
+        Performs a transaction between two players if possible and if certain
+            conditions are met.
+
+        Args:
+            giver (str): The player who gives the item
+            receiver (str): The player who receives the item.
+            players_inv (dict): A dictionary containing the inventories of
+                all players.
+            item (str): The object given to the receiver.
+            quantity_to_give (int): The quantity of items to be given to the
+                receiver.
+
+        Return: Returns None if the transaction failed.
+    """
     if quantity_to_give > 1:
         print(f"=== Transaction: {giver.capitalize()} gives {receiver.capitalize()} {quantity_to_give} {item}s ===")
     elif quantity_to_give == 1:
@@ -39,9 +56,9 @@ def transaction(giver: str, receiver: str, players_inv: dict, item: str, quantit
         print()
         return None
 
-    if item in giver_inv.keys() and giver_inv[item]['quantity'] >= quantity_to_give:
+    if item in players_inv[giver] and players_inv[giver][item]['quantity'] >= quantity_to_give:
         print("Transaction successful!")
-    elif item not in giver_inv.keys():
+    elif item not in players_inv[giver]:
         print(f"Transaction canceled! {giver.capitalize()} does not own {item}")
         print()
         return None
@@ -52,15 +69,13 @@ def transaction(giver: str, receiver: str, players_inv: dict, item: str, quantit
     print()
 
     print("=== Updated Inventories ===")
-    giver_inv[item]['quantity'] -= quantity_to_give
+    players_inv[giver][item]['quantity'] -= quantity_to_give
     
-    receiver_inv = players_inv.get(receiver)
-    if item in receiver_inv:
-        receiver_inv[item]['quantity'] += quantity_to_give
+    if item in players_inv[receiver]:
+        players_inv[receiver][item]['quantity'] += quantity_to_give
     else:
-        new_item_data = giver_inv[item].copy()
-        new_item_data['quantity'] = quantity_to_give
-        receiver_inv.update({item: new_item_data})
+        players_inv[receiver][item] = players_inv[giver][item].copy()
+        players_inv[receiver][item]['quantity'] = quantity_to_give
 
     if quantity_to_give > 1:
         print(f"{giver.capitalize()} {item}s: {players_inv[giver][item]['quantity']}")
@@ -71,7 +86,13 @@ def transaction(giver: str, receiver: str, players_inv: dict, item: str, quantit
     print()
 
 
-def inventory_analytics(players_inv):
+def inventory_analytics(players_inv) -> None:
+    """Displays several inventory analyses.
+
+        Arg:
+            player_inv (dict): A dictionary containing the inventories of
+                all players.
+    """
     print("=== Inventory Analytics ===")
     highest_value = 0
     for player, inventory in players_inv.items():
@@ -100,14 +121,19 @@ def inventory_analytics(players_inv):
 
 
 def inventory_system(players_inv) -> None:
+    """Calls different functions to obtain the requested display.
+
+        Arg:
+            player_inv (dict): A dictionary containing the inventories of
+                all players.
+    """
     print("=== Player Inventory System ===")
     print()
     print_inventory("alice", players_inv["alice"])
     transaction("alice", "bob", players_inv, "potion", 2)
     inventory_analytics(players_inv)
-    # print_inventory("alice", players_inv["alice"])
-    # print_inventory("bob", players_inv["bob"])
-    
+    print_inventory("alice", players_inv["alice"])
+    print_inventory("bob", players_inv["bob"])
 
 
 if __name__ == "__main__":

@@ -1,4 +1,13 @@
-def list_comprehension(players):
+def list_comprehension(players: dict) -> None:
+    """Demonstrates list comprehensions for filtering and transforming player data.
+
+    Prints lists of high scorers, doubled scores, and active players based on 
+    specific conditions.
+
+    Args:
+        players (list[dict]): A list of dictionaries, where each dictionary 
+            represents a player's data.
+    """
     print("=== List Comprehension Examples ===")
     high_scorers = [player['name'] for player in players if int(player['score']) > 2000]
     print(f"High scorers (>2000): {high_scorers}")
@@ -7,7 +16,16 @@ def list_comprehension(players):
     active_players = [player['name'] for player in players if player['status'] == 'active']
     print(f"Active players: {active_players}")
 
+
 def dict_comprehension(players):
+    """Demonstrates dictionary comprehensions for mapping and grouping data.
+
+    Creates and prints dictionaries for player scores, score distribution categories 
+    (high, medium, low), and achievement counts per player.
+
+    Args:
+        players (list[dict]): A list of dictionaries representing player data.
+    """
     print("=== Dict Comprehension Examples ===")
     players_score = {player['name']: player['score'] for player in players}
     print(f"Player scores: {players_score}")
@@ -21,7 +39,15 @@ def dict_comprehension(players):
     print(f"Achievement counts: {achievement_count}")
 
 
-def set_comprehension(players):
+def set_comprehension(players: dict) -> None:
+    """Demonstrates set comprehensions for extracting unique values.
+
+    Extracts and prints unique sets of player names, achievements, and regions
+    to eliminate duplicates.
+
+    Args:
+        players (list[dict]): A list of dictionaries representing player data.
+    """
     print("=== Set Comprehension Examples ===")
     unique_players = set(player['name'] for player in players)
     print(f"Unique players: {unique_players}")
@@ -30,7 +56,16 @@ def set_comprehension(players):
     active_region = set(player['region'] for player in players)
     print(f"Active regions: {active_region}")
 
-def combined_analysis(players):
+
+def combined_analysis(players: dict) -> None:
+    """Performs aggregate analysis on the player dataset.
+
+    Calculates and prints summary statistics including total player count, 
+    total unique achievements, average score, and the top-performing player.
+
+    Args:
+        players (list[dict]): A list of dictionaries representing player data.
+    """
     print("=== Combined Analysis ===")
     total_players = sum(1 for player in players)
     print(f"Total players: {total_players}")
@@ -38,11 +73,19 @@ def combined_analysis(players):
     print(f"Total unique achievements: {total_unique_achievement}")
     average_score = sum(player['score'] for player in players) / (total_players)
     print(f"Average score: {average_score}")
-    top_player = max(players, key=lambda p: p['score'])
+    top_player = max((p['score'], p) for p in players)[1]
     print(f"Top performer: {top_player['name']} ({top_player['score']} points, {len(top_player['achievement'])} achievements)")
 
 
-def analytics_dashboard(players):
+def analytics_dashboard(players: dict) -> None:
+    """Orchestrates the execution of various comprehension examples.
+
+    Acts as the main controller to run list, dictionary, set, and combined 
+    analysis functions sequentially for the dashboard view.
+
+    Args:
+        players (list[dict]): A list of dictionaries representing player data.
+    """
     print("=== Game Analytics Dashboard ===")
     print()
     list_comprehension(players)
