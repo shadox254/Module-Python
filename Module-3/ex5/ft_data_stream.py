@@ -2,15 +2,19 @@ import random
 from typing import Iterator
 
 
-def data_stream_processor(event_count: int, event_list: list, player_list: list) -> Iterator[tuple[int, str, int, str]]:
+def data_stream_processor(event_count: int, event_list: list,
+                          player_list: list) -> Iterator[
+                              tuple[int, str, int, str]]:
     """Simulates a stream of game events associated with players.
 
-        This generator prints the processing status to stdout and yields 
-        randomly generated events combining a player, a level, and an event type.
+        This generator prints the processing status to stdout and yields
+        randomly generated events combining a player, a level, and an
+            event type.
 
         Args:
             event_count (int): The total number of events to generate.
-            event_list (list): A list of strings representing possible event names.
+            event_list (list): A list of strings representing possible
+                event names.
             player_list (list): A list of strings representing player names.
 
         Yields:
@@ -27,21 +31,23 @@ def data_stream_processor(event_count: int, event_list: list, player_list: list)
     elif event_count == 1:
         print(f"Processing {event_count} game event...")
     else:
-        print(f"Error! even_count is invalid.")
+        print("Error! even_count is invalid.")
     print()
 
     for event_id in range(0, event_count):
         event = random.choice(event_list)
         player = random.choice(player_list)
         level = random.randint(1, 20)
-        yield(event_id, player, level, event)
+        yield (event_id, player, level, event)
 
 
-def stream_analytics(event_count: int, high_level_count: int, treasure_event: int, level_event: int) -> None:
+def stream_analytics(event_count: int, high_level_count: int,
+                     treasure_event: int, level_event: int) -> None:
     """Displays a summary report of the stream processing analytics.
 
     Prints statistics including total events, count of high-level players,
-    occurrence of specific event types, and performance metrics to standard output.
+    occurrence of specific event types, and performance metrics to standard
+        output.
 
     Args:
         event_count (int): Total number of events processed.
@@ -56,7 +62,7 @@ def stream_analytics(event_count: int, high_level_count: int, treasure_event: in
     print(f"Level-up events: {level_event}")
     print()
     print("Memory usage: Constant (streaming)")
-    print(f"Processing time: 0.045 seconds")
+    print("Processing time: 0.045 seconds")
     print()
 
 
@@ -103,8 +109,8 @@ def prime_number(n_terms: int) -> Iterator[int]:
 def generator_demonstration(n_terms: int, x_terms: int) -> None:
     """Demonstrates the usage of generator functions by printing sequences.
 
-    Consumes the generators to display lists of Fibonacci numbers and 
-    prime numbers to standard output.
+    Consumes the generators to display lists of Fibonacci numbers and
+        prime numbers to standard output.
 
     Args:
         n_terms (int): The count of Fibonacci numbers to display.
@@ -125,14 +131,13 @@ def generator_demonstration(n_terms: int, x_terms: int) -> None:
         list_prime.append(str(i))
     res = ", ".join(list_prime)
     print(res)
-    
 
 
 def data_stream(event_count: int, event_list: list, player_list: list) -> None:
     """Orchestrates the data stream processing and analytics display.
 
-    Consumes the data stream generator, prints real-time events, aggregates 
-    statistics for the final report, and runs the generator demonstration.
+    Consumes the data stream generator, prints real-time events, aggregates
+        statistics for the final report, and runs the generator demonstration.
 
     Args:
         event_count (int): The total number of events to simulate.
@@ -152,7 +157,8 @@ def data_stream(event_count: int, event_list: list, player_list: list) -> None:
         if event == "leveled up":
             level_event += 1
     print()
-    stream_analytics(event_count, high_level_count, treasure_event, level_event)
+    stream_analytics(event_count, high_level_count, treasure_event,
+                     level_event)
     generator_demonstration(10, 5)
 
 

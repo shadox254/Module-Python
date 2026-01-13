@@ -22,7 +22,7 @@ def water_plants(plant_list: list[str]) -> None:
 def test_watering_system() -> None:
     """
         Runs test cases to simulate the watering system behavior under normal
-        and error conditions.
+            and error conditions.
     """
     print("=== Garden Watering System ===")
     print()

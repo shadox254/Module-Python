@@ -7,7 +7,7 @@ class GardenError(Exception):
 class PlantError(GardenError):
     """
         Exception raised for errors specifically involving plant health
-        or growth.
+            or growth.
     """
     def __init__(self, message: str) -> None:
         super().__init__(message)

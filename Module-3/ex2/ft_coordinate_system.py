@@ -31,7 +31,7 @@ def display_distance_from_input(first_coord: tuple | str) -> None:
             print(f"Parsed position: {coord_tuple}")
         except ValueError as e:
             print(f"Parsing invalid coordinates: \"{first_coord}\"\n"
-                  f"Error parsing coordinates: {e}'\n"
+                  f"Error parsing coordinates: {e}\n"
                   f"Error details - Type: ValueError, Args: (\"{e}\",)")
             return None
 
@@ -70,11 +70,13 @@ def coordinate_system() -> None:
         Perform several tests with display_distance_from_input to see different
             behaviors of the function and if there are any crashes.
     """
+    print("=== Game Coordinate System ===")
+    print()
     test1 = (10, 20, 5)
     display_distance_from_input(test1)
     print()
 
-    test2 = ("3,4,5")
+    test2 = ("3,4,0")
     display_distance_from_input(test2)
     print()
 
@@ -87,11 +89,13 @@ def coordinate_system() -> None:
             display_distance_from_input(sys.argv[1])
         elif len(sys.argv) == 4:
             try:
-                args_tuple = (int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
+                args_tuple = (int(sys.argv[1]), int(sys.argv[2]),
+                              int(sys.argv[3]))
                 display_distance_from_input(args_tuple)
             except ValueError as e:
-                print(f"Parsing invalid coordinates: \"{sys.argv[1]},{sys.argv[2]},{sys.argv[3]}\"\n"
-                      f"Error parsing coordinates: {e}'\n"
+                print(f"Parsing invalid coordinates: \"{sys.argv[1]},"
+                      f"{sys.argv[2]},{sys.argv[3]}\"\n"
+                      f"Error parsing coordinates: {e}\n"
                       f"Error details - Type: ValueError, Args: (\"{e}\",)")
         else:
             print(f"Invalid number of arguments. Usage: python3 {sys.argv[0]} "
@@ -106,7 +110,8 @@ def coordinate_system() -> None:
         print(f"Player at x={x1}, y={y1}, z={z1}")
         print(f"Coordinates: X={x1}, Y={y1}, Z={z1}")
     except ValueError:
-        print("Error: Unable to unpack, coordinates contain invalid characters.")
+        print("Error: Unable to unpack, "
+              "coordinates contain invalid characters.")
 
 
 if __name__ == "__main__":

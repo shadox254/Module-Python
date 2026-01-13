@@ -19,7 +19,7 @@ class GardenManager:
 
         Args:
             water_tank (int): Initial amount of water available.
-            Defaults to 10.
+                Defaults to 10.
         """
         self.garden = {}
         self.water_tank = water_tank
@@ -50,7 +50,7 @@ class GardenManager:
 
         Raises:
             GardenError: If the plant is not found or if the water tank
-            is insufficient.
+                is insufficient.
         """
         if plant_name not in self.garden:
             raise GardenError(f"Plant {plant_name} not found in garden")
@@ -77,12 +77,12 @@ class GardenManager:
             raise WaterError(f"Water level {plant['water_level']} is too"
                              " high (max 10)")
         print(f"{plant['name']}: healthy (water: {plant['water_level']},"
-              " sun: {plant['sun']})")
+              f" sun: {plant['sun']})")
 
 
 def garden_management() -> None:
     """
-    Simulates a garden management workflow to test system functionality.
+        Simulates a garden management workflow to test system functionality.
     """
     print("=== Garden Management System ===")
     print()
