@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, List, Dict, Union, Optional
+from typing import Any, Dict, List, Optional, Union
 
 
 class DataStream(ABC):
@@ -10,7 +10,9 @@ class DataStream(ABC):
     def process_batch(self, data_batch: List[Any]) -> str:
         pass
 
-    def filter_data(self, data_batch: List[Any], criteria: Optional[str]= None) -> List[Any]:
+    def filter_data(
+        self, data_batch: List[Any], criteria: Optional[str] = None
+    ) -> List[Any]:
         if criteria is None:
             return data_batch
         filtered_list = []
@@ -29,21 +31,20 @@ class SensorStream(DataStream):
         super().__init__(id)
         self.stream_type = "Environmental Data"
 
-
     def process_batch(self, data_batch):
-        text = f"Processing sensor batch: {data_batch}\n"
+        text = ""
         process_count = len(data_batch)
         try:
             for element in data_batch:
                 key, value = element.split(":")
-                if key == None or value == None:
+                if key is None or value is None:
                     raise ValueError
         except ValueError:
             return "Error, the format of one of the elements in data_batch is invalid. Format: “element”:“value”"
-        filtered_list = self.filter_data(data_batch, 'temp')
+        filtered_list = self.filter_data(data_batch, "temp")
         try:
             temp_sum = sum(float(element.split(":")[1]) for element in filtered_list)
-        except:
+        except ValueError:
             return "Error, one of the temperatures is not numeric"
         try:
             temp_count = len(filtered_list)
@@ -51,8 +52,10 @@ class SensorStream(DataStream):
                 raise ValueError
         except ValueError:
             return "Error, data_batch does not contain temperature "
-        average_temp = temp_sum/temp_count
-        text += f"Sensor analysis: {process_count} reading processed, avg temp: {average_temp}°C"
+        print(f"Processing sensor batch: {data_batch}")
+        average_temp = temp_sum / temp_count
+        print("Sensor analysis: ", end="")
+        text += f"{process_count} reading processed, avg temp: {average_temp}°C"
         return text
 
 
@@ -63,11 +66,11 @@ class TransactionStream(DataStream):
 
     def process_batch(self, data_batch):
         money = 0
-        text = "Processing transaction batch: "
+        text = ""
         try:
             for element in data_batch:
                 key, value = element.split(":")
-                if key == None or value == None:
+                if key is None or value is None:
                     raise ValueError
         except ValueError:
             return "Error, the format of one of the elements in data_batch is invalid. Format: “element”:“value”"
@@ -83,7 +86,8 @@ class TransactionStream(DataStream):
                     raise ValueError
         except ValueError:
             return "Unknown operations, only “buy” and “sell” operations are available."
-        text += f"{data_batch}\nTransaction analysis: "
+        print(f"Processing transaction batch: {data_batch}")
+        print("Transaction analysis: ", end="")
         operations_count = len(data_batch)
         text += f"{operations_count} operations, net flow: "
         for operations in data_batch:
@@ -104,14 +108,15 @@ class EventStream(DataStream):
         self.stream_type = "System Events"
 
     def process_batch(self, data_batch):
-        text = "Processing event batch: "
+        text = ""
         try:
             event_count = len(data_batch)
             if event_count == 0:
                 raise ValueError
         except ValueError:
             return "Error, data_batch cannot be empty"
-        text += f"{data_batch}\nEvent analysis: "
+        print(f"Processing event batch: {data_batch}")
+        print("Event analysis: ", end="")
         error_count = len(self.filter_data(data_batch, "error"))
         if error_count == 1:
             text += f"{event_count} events, {error_count} error detected"
@@ -162,29 +167,24 @@ def data_stream():
     print("=== CODE NEXUS - POLYMORPHIC STREAM SYSTEM ===")
     print()
 
-    data_batch = [
-        "temp:22.5",
-        "humidity:65",
-        "pressure:1013"
-        ]
+    data_batch = ["humidity:65", "pressure:1013"]
     sensor_stream_process(data_batch)
     print()
 
-    data_batch = [
-        "buy:100",
-        "sell:150",
-        "buy:75"
-    ]
-    transaction_stream_process(data_batch)
-    print()
+    # data_batch = ["buy:100", "sell:150", "buy:75"]
+    # transaction_stream_process(data_batch)
+    # print()
 
-    data_batch = [
-        "login",
-        "error",
-        "logout"
-    ]
-    event_stream_process(data_batch)
-    print()
+    # data_batch = ["login", "error", "logout"]
+    # event_stream_process(data_batch)
+    # print()
+
+    # print("=== Polymorphic Stream Processing ===")
+    # print("Processing mixed stream types through unified interface...")
+    # print()
+
+    # print("Batch 1 Results:")
+    
 
 
 if __name__ == "__main__":
