@@ -1,4 +1,13 @@
 def error_handler(file: str):
+    """
+    Attempts to access a file and handles specific exceptions gracefully.
+
+    Differentiates between successful access, missing files, and permission
+        issues (PermissionError) to provide context-aware status updates.
+
+    Args:
+        file (str): The path to the target file.
+    """
     try:
         with open(file, "r") as f:
             print(f"ROUTINE ACCESS: Attempting access to '{file}'...")
@@ -15,6 +24,13 @@ def error_handler(file: str):
 
 
 def crisis_response(file: str):
+    """
+    Simulates various system crisis scenarios by orchestrating specific
+        file access attempts.
+
+    Args:
+        file (str): A file path to test.
+    """
     print("=== CYBER ARCHIVES - CRISIS RESPONSE SYSTEM ===")
     print()
 

@@ -8,9 +8,10 @@ def ancient_text(file):
         print()
     except FileNotFoundError:
         print("ERROR: Storage vault not found. Run data generator first.")
+        f.close()
         return None
     print("RECOVERED DATA:")
-    print(f.read().replace("[", "{[}").replace("]", "{]}"))
+    print(f.read())
     f.close()
     print()
     print("Data recovery complete. Storage unit disconnected.")

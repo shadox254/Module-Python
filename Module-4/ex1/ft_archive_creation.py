@@ -1,4 +1,12 @@
 def archive_creation(file):
+    """
+    Creates a new storage unit (file) and writes a sequence of
+        predefined log entries into it.
+
+    Args:
+        file (str): The path or name of the file to create.
+            If the file exists, it will be overwritten.
+    """
     text = [
         "[ENTRY 001] New quantum algorithm discovered",
         "[ENTRY 002] Efficiency increased by 347%",
@@ -15,7 +23,7 @@ def archive_creation(file):
     print("Inscribing preservation data...")
     for line in text:
         f.write(line + '\n')
-        print(line.replace("[", "{[}").replace("]", "{]}"))
+        print(line)
     f.close()
     print()
 
