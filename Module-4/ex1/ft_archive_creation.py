@@ -1,4 +1,4 @@
-def archive_creation(file):
+def archive_creation(file: str):
     """
     Creates a new storage unit (file) and writes a sequence of
         predefined log entries into it.

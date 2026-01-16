@@ -1,4 +1,15 @@
-def ancient_text(file):
+def ancient_text(file: str):
+    """
+    Simulates a 'Cyber Archives' data recovery interface and displays
+        the content of the specified file.
+
+    Args:
+        file (str): The path to the file to be read.
+
+    Returns:
+        None: This function performs side effects (printing) and does not
+            return a value, except explicitly None on file error.
+    """
     print("=== CYBER ARCHIVES - DATA RECOVERY SYSTEM ===")
     print()
     print(f"Accessing Storage Vault: {file}")
@@ -8,7 +19,6 @@ def ancient_text(file):
         print()
     except FileNotFoundError:
         print("ERROR: Storage vault not found. Run data generator first.")
-        f.close()
         return None
     print("RECOVERED DATA:")
     print(f.read())
