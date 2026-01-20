@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from CreatureCard import CreatureCard
-from Card import Rarity
+from ex0.CreatureCard import CreatureCard
+from ex0.Card import Rarity
 
 
 def main() -> None:
