@@ -4,6 +4,8 @@ from enum import Enum
 
 class Ability(Enum):
     MANA = "mana"
+    DMG = "damage"
+    GUARD = "guard"
 
 
 class ArtifactCard(Card):
@@ -21,6 +23,10 @@ class ArtifactCard(Card):
         self.type = "Artifact"
         if effect == Ability.MANA:
             self.ability_effect = "Permanent: +1 mana per turn"
+        elif effect == Ability.DMG:
+            self.ability_effect = "Permanent: +1 damage per turn"
+        elif effect == Ability.GUARD:
+            self.ability_effect = "Permanent: -1 damage received per turn"
 
     def play(self, game_state: dict = None) -> dict:
         if game_state is None:
@@ -45,6 +51,10 @@ class ArtifactCard(Card):
     def activate_ability(self) -> dict:
         if self.effect == Ability.MANA:
             print(f"{self.name} give you +1 mana this turn!")
+        if self.effect == Ability.DMG:
+            print(f"{self.name} give you +1 damage this turn!")
+        if self.effect == Ability.GUARD:
+            print(f"{self.name} give you +1 reduction damage this turn!")
         return {
             "effect": self.effect
         }

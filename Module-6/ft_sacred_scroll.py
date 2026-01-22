@@ -6,9 +6,12 @@ def sacred_scroll():
     print()
 
     print("Testing direct module access:")
-    fire = f"alchemy.elements.create_fire(): {alchemy.elements.create_fire()}"
-    water = f"alchemy.elements.create_water(): {alchemy.elements.create_water()}"
-    earth = f"alchemy.elements.create_earth(): {alchemy.elements.create_earth()}"
+    fire = f"alchemy.elements.create_fire(): \
+{alchemy.elements.create_fire()}"
+    water = f"alchemy.elements.create_water(): \
+{alchemy.elements.create_water()}"
+    earth = f"alchemy.elements.create_earth(): \
+{alchemy.elements.create_earth()}"
     air = f"alchemy.elements.create_air(): {alchemy.elements.create_air()}"
     elements = [fire, water, earth, air]
     print(*elements, sep="\n")
@@ -29,5 +32,5 @@ def sacred_scroll():
     print(f"Author: {alchemy.__author__}")
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     sacred_scroll()

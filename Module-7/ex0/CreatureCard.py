@@ -17,10 +17,10 @@ class CreatureCard(Card):
         try:
             int(health)
         except ValueError:
-            raise ValueError("Error, attack must be an integer")
+            raise ValueError("Error, health must be an integer")
 
-        if health < 1:
-            raise ValueError("Error, attack must be greater than 1")
+        if health < 0:
+            raise ValueError("Error, health must be greater than 0")
         self.health = health
 
     def play(self, game_state: dict = None) -> dict:

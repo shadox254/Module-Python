@@ -4,6 +4,7 @@ from ex0.Card import Rarity
 from ex1.SpellCard import SpellCard, Effect
 from ex1.ArtifactCard import ArtifactCard, Ability
 from ex1.Deck import Deck
+import sys
 
 
 def main() -> None:
@@ -17,22 +18,26 @@ def main() -> None:
                                    Effect.DMG)
     except ValueError as e:
         print(e)
+        sys.exit(2)
 
     try:
         mana_crystal = ArtifactCard("Mana Crystal", 2, Rarity.UNCOMMON, 1,
                                     Ability.MANA)
     except ValueError as e:
         print(e)
+        sys.exit(2)
 
     try:
         fire_dragon = CreatureCard("Fire Dragon", 7, Rarity.LEGENDARY, 6, 7)
     except ValueError as e:
         print(e)
+        sys.exit(2)
 
     try:
         blob = CreatureCard("Blob", 6, Rarity.SECRET, 100, 100)
     except ValueError as e:
         print(e)
+        sys.exit(2)
 
     deck.add_card(lightning_bolt)
     deck.add_card(mana_crystal)
@@ -50,7 +55,11 @@ def main() -> None:
     }
     for card in deck.deck:
         print(f"Drew: {card.name} ({card.type})")
-        print(f"Play result: {card.play(game_state)}")
+        try:
+            print(f"Play result: {card.play(game_state)}")
+        except (TypeError, KeyError, ValueError) as e:
+            print(e)
+            sys.exit(2)
         print()
 
     print("Polymorphism in action: Same interface, different card behaviors!")
