@@ -37,7 +37,7 @@ class FantasyCardFactory(CardFactory):
                                       "attack": 4, "health": 2},
             "Tony Mcfuse": {"name": "Tony Mcfuse", "cost": 4,
                             "rarity": Rarity.EPIC, "attack": 3, "health": 3},
-            "Archfiend Commander": {"name": "Archfiend Commander", "cost": 3, 
+            "Archfiend Commander": {"name": "Archfiend Commander", "cost": 3,
                                     "rarity": Rarity.RARE,
                                     "attack": 2, "health": 2},
             "Freddy Krueger": {"name": "Freddy Krueger", "cost": 7,
@@ -106,10 +106,10 @@ class FantasyCardFactory(CardFactory):
                            "effect": Ability.MANA},
             "Tharkun": {"name": "Tharkun", "cost": 3,
                         "rarity": Rarity.LEGENDARY, "durability": 4,
-                        "effect": Ability.DMG}, 
+                        "effect": Ability.DMG},
             "Light saber": {"name": "Light saber", "cost": 2,
-                        "rarity": Rarity.MYTHIC, "durability": 5,
-                        "effect": Ability.DMG}
+                            "rarity": Rarity.MYTHIC, "durability": 5,
+                            "effect": Ability.DMG}
         }
 
     def create_creature(self, name_or_power: str | int | None = None) -> Card:
@@ -155,9 +155,11 @@ class FantasyCardFactory(CardFactory):
             "artifacts": []
         }
         if size == 1:
-            deck["creatures"].append(random.choice(list(self.creatures.values())))
+            deck["creatures"].append(random.choice(
+                list(self.creatures.values())))
         elif size == 2:
-            deck["creatures"].append(random.choice(list(self.creatures.values())))
+            deck["creatures"].append(random.choice(
+                list(self.creatures.values())))
             deck["spells"].append(random.choice(list(self.spells.values())))
         else:
             ratio_creature = [0.40, 0.50, 0.60]
@@ -166,13 +168,15 @@ class FantasyCardFactory(CardFactory):
             spells_nb = int(size - creature_nb - artifact_nb)
 
             for i in range(creature_nb):
-                deck["creatures"].append(random.choice(list(self.creatures.values())))
+                deck["creatures"].append(random.choice(
+                    list(self.creatures.values())))
             for i in range(artifact_nb):
-                deck["artifacts"].append(random.choice(list(self.artifacts.values())))
+                deck["artifacts"].append(random.choice(
+                    list(self.artifacts.values())))
             for i in range(spells_nb):
-                deck["spells"].append(random.choice(list(self.spells.values())))
+                deck["spells"].append(random.choice(
+                    list(self.spells.values())))
         return deck
-        
 
     def get_supported_types(self) -> dict:
         return self.types

@@ -5,6 +5,7 @@ from ex3.AggressiveStrategy import AggressiveStrategy
 from ex3.GameEngine import GameEngine
 import random
 
+
 def main():
     print("Configuring Fantasy Card Game...")
     factory = FantasyCardFactory()
@@ -39,7 +40,7 @@ def main():
         if card_obj:
             game.hand.append(card_obj)
             hand.append(f"{card_obj.name} ({card_obj.cost})")
-    print(hand)
+    print(f"Hand: {hand}")
     print()
 
     game.configure_engine(factory, strategy)
@@ -49,7 +50,7 @@ def main():
     Enemy2 = CreatureCard("Enemy2", 1, Rarity.COMMON, 1, 1)
     game.battlefield.append(Enemy1)
     game.battlefield.append(Enemy2)
-    
+
     turn_result = game.simulate_turn()
     print(f"Strategy: {strategy.get_strategy_name()}")
     print(f"Actions: {turn_result}")
@@ -58,48 +59,9 @@ def main():
     print("Game Report:")
     print(game.get_engine_status())
 
+
 if __name__ == "__main__":
     print("=== DataDeck Game Engine ===\n")
     main()
-    print("\nAbstract Factory + Strategy Pattern: Maximum flexibility achieved!")
-
-# if __name__ == "__main__":
-#     factory = FantasyCardFactory()
-
-#     print("--- Test Création Unitaire ---")
-#     creature = factory.create_creature("Dragon")
-#     print(creature.name)
-
-#     spell = factory.create_spell("Fireball")
-#     print(spell.name)
-
-#     artifact = factory.create_artifact("Mana ring")
-#     print(artifact.name)
-
-#     print("\n--- Test Deck ---")
-#     deck = factory.create_themed_deck(5)
-#     print(f"Taille du deck : {deck['deck_size']}")
-#     for category in ["creatures", "spells", "artifacts"]:
-#         cards_list = deck[category]
-#         if cards_list:
-#             print(f"\n[{category.capitalize()}]")
-#             for card_data in cards_list:
-#                 print(f"  - {card_data['name']} (Coût: {card_data['cost']})")
-
-#     print("-------------------------------------------------------------------------------------------------------"
-#     "-------------------------------------------------------------------------------------------------------"
-#     "-------------------------------------------------------------------------------------------------------"
-#     "-------------------------------------------------------------------------------------------------------"
-#     "-------------------------------------------------------------------------------------------------------"
-#     "-------------------------------------------------------------------------------------------------------")
-
-#     strategy = AggressiveStrategy()
-#     goblin = CreatureCard("Goblin", 2, Rarity.COMMON, 4, 2)
-#     dragon = CreatureCard("Dragon", 5, Rarity.LEGENDARY, 50, 5)
-#     hand = [dragon, goblin]
-#     rat = CreatureCard("Rat", 1, Rarity.COMMON, 1, 2)
-#     giant = CreatureCard("Giant", 6, Rarity.EPIC, 4, 10)
-#     battlefield = [giant, rat]
-
-#     print(f"Stratégie active : {strategy.get_strategy_name()}")
-#     print(f"Actions: {strategy.execute_turn(hand, battlefield)}")
+    print("\nAbstract Factory + Strategy Pattern: Maximum flexibility \
+achieved!")

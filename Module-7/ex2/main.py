@@ -3,6 +3,7 @@ from ex0.CreatureCard import CreatureCard
 from ex2.EliteCard import EliteCard
 import sys
 
+
 def main() -> None:
     print("=== DataDeck Ability System ===")
     print()
@@ -15,12 +16,12 @@ def main() -> None:
 
     print("Combat phase:")
     try:
-        arcane_warrior = EliteCard("Arcane Warrior", 5, Rarity.MYTHIC, 7, 3, 10,
-                                   "Arcane Momentum", 10, 7)
+        arcane_warrior = EliteCard("Arcane Warrior", 5, Rarity.MYTHIC, 7, 3,
+                                   10, "Arcane Momentum", 10, 7)
         Enemy = CreatureCard("Enemy", 1, Rarity.COMMON, 1, 20)
         Enemy1 = CreatureCard("Enemy1", 1, Rarity.COMMON, 1, 20)
         Enemy2 = CreatureCard("Enemy2", 1, Rarity.COMMON, 1, 1)
-    except ValueError as e:
+    except (ValueError, TypeError) as e:
         print(e)
         sys.exit(2)
     try:

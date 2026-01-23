@@ -5,7 +5,7 @@ from ex2.Magical import Magical
 
 
 class EliteCard(Card, Combatable, Magical):
-    def __init__(self, name: str, cost: int, rarity: Rarity, attack:int,
+    def __init__(self, name: str, cost: int, rarity: Rarity, attack: int,
                  defense: int, health: int, spell_name: str, spell_dmg: int,
                  spell_cost: int):
         try:
@@ -79,9 +79,9 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def attack(self, target: Card) -> dict:
-        if (isinstance(target, CreatureCard) is False and
-            isinstance(target, EliteCard) is False ):
-            raise TypeError("Error, target must be a Creature or  a Elite")
+        if (isinstance(target, CreatureCard) is False
+                and isinstance(target, EliteCard) is False):
+            raise TypeError("Error, target must be a Creature or a Elite")
         return {
             "attacker": self.name,
             "target": target.name,
@@ -90,6 +90,8 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def defend(self, incoming_damage: int) -> dict:
+        if isinstance(incoming_damage, int) is False:
+            return TypeError("Error, damage must be an integer")
         if incoming_damage < 0:
             raise ValueError("Error, damage cannot be negative")
         damage_taken = incoming_damage - self.defense
@@ -101,7 +103,6 @@ class EliteCard(Card, Combatable, Magical):
             alive = False
         else:
             alive = True
-    
         return {
             "defender": self.name,
             "damage_taken": damage_taken,
@@ -116,7 +117,8 @@ class EliteCard(Card, Combatable, Magical):
             "health": self.health
         }
 
-    def cast_spell(self, spell_name: str = None, targets: list[Card] = None) -> dict:
+    def cast_spell(self, spell_name: str = None,
+                   targets: list[Card] = None) -> dict:
         if spell_name is None:
             raise ValueError("No spell to cast")
         if targets is None:

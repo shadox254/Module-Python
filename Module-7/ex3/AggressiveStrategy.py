@@ -1,5 +1,6 @@
 from ex3.GameStrategy import GameStrategy
 
+
 class AggressiveStrategy(GameStrategy):
     def __init__(self):
         self.strategy_name = "AggressiveStrategy"
@@ -20,7 +21,7 @@ class AggressiveStrategy(GameStrategy):
             }
         sorted_hand = sorted(hand, key=lambda c: c.cost)
         prio_targets = self.prioritize_targets(battlefield)
-        remaining_hand = sorted_hand[:] 
+        remaining_hand = sorted_hand[:]
 
         for target in prio_targets:
             for card in remaining_hand:
@@ -30,11 +31,10 @@ class AggressiveStrategy(GameStrategy):
                     if card.attack >= target.health:
                         card_played.append(card.name)
                         targets_attacked.append(target.name)
-                        
                         mana_used += card.cost
                         current_mana -= card.cost
                         damage_dealt += card.attack
-                        
+
                         remaining_hand.remove(card)
                         break
         return {

@@ -1,6 +1,7 @@
 from ex3.CardFactory import CardFactory
 from ex3.GameStrategy import GameStrategy
 
+
 class GameEngine:
     def __init__(self):
         self.hand = []
@@ -8,7 +9,8 @@ class GameEngine:
         self.turn = 0
         self.damage_dealt = 0
 
-    def configure_engine(self, factory: CardFactory, strategy: GameStrategy) -> None:
+    def configure_engine(self, factory: CardFactory,
+                         strategy: GameStrategy) -> None:
         self.factory = factory
         self.strategy = strategy
 
@@ -17,7 +19,7 @@ class GameEngine:
             raise ValueError("Error, no enemy to simulate a turn")
         if len(self.hand) == 0:
             raise ValueError("Error, hand cannot be empty to simulate a turn")
-        
+
         self.turn += 1
         turn_result = self.strategy.execute_turn(self.hand, self.battlefield)
         self.damage_dealt += turn_result.get("damage_dealt", 0)
