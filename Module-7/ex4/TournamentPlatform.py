@@ -90,9 +90,8 @@ class TournamentPlatform():
                       for participant in self.tournament_participant)
                       / len(self.tournament_participant))
 
-        if self.matches_played == 0:
-            platform_status = "inactive"
-        else:
+        self.matches_played = "inactive"
+        if self.matches_played >= 1:
             platform_status = "active"
         return {
             "total_cards": len(self.tournament_participant),

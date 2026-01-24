@@ -23,12 +23,16 @@ def main():
 
     participants = [fire_dragon, ice_wizard]
     for participant in participants:
-        print(tournament.register_card(participant))
-        print(f"{participant.name} (ID: {participant.id}):")
-        print(f"- Interfaces: [{Card.__name__}, {Combatable.__name__}, \
+        try:
+            print(tournament.register_card(participant))
+            print(f"{participant.name} (ID: {participant.id}):")
+            print(f"- Interfaces: [{Card.__name__}, {Combatable.__name__}, \
 {Rankable.__name__}]")
-        print(f"- Rating: {participant.elo}")
-        print(f"- Record: {participant.wins}-{participant.losses}")
+            print(f"- Rating: {participant.elo}")
+            print(f"- Record: {participant.wins}-{participant.losses}")
+        except TypeError as e:
+            print(e)
+            sys.exit(2)
         print()
 
     print("Creating tournament match...")
