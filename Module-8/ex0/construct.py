@@ -1,10 +1,14 @@
 import sys
 import os
+from site import getsitepackages
 
-def not_in_env():
+
+def not_in_env() -> None:
     print("MATRIX STATUS: You're still plugged in")
     print()
 
+    # sys.executable returns the path to the executable.
+    # sys.version_info_minor returns the minor version number.
     print(f"Current python: {sys.executable}.{sys.version_info.minor}")
     print("Virtual Environment: None detected")
     print()
@@ -18,16 +22,20 @@ def not_in_env():
     print("source matrix_env/bin/activate # On Unix")
     print("matrix_env")
     print("Scripts")
-    print("activate # On Windows")
+    print("activate     # On Windows")
     print()
 
     print("Then run this program again.")
 
 
-def in_env():
+def in_env() -> None:
     print("MATRIX STATUS: Welcome to the construct")
     print()
 
+    # sys.executable returns the path to the executable.
+    # os.path.basename(sys.prefix) Return the name of the folder where the
+    #       Python environment is installed.
+    # sys.prefix returns the path of python on the env
     print(f"Current Python: {sys.executable}")
     print(f"Virtual Environment: {os.path.basename(sys.prefix)}")
     print(f"Environment Path: {sys.prefix}")
@@ -38,10 +46,15 @@ def in_env():
     print()
 
     print("Package installation path:")
-    print(sys.path_importer_cache)
+    # sys.path_importer_cache() returns a list of strings containing
+    #       the absolute paths to the site-packages directories
+    print(getsitepackages()[0])
 
 
 if __name__ == "__main__":
+    # sys.prefix returns the path of python on the env
+    # sys.base_prefix returns the path to the base Python installation,
+    #       cannot be changed on env
     if sys.prefix == sys.base_prefix:
         not_in_env()
     else:
