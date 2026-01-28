@@ -23,7 +23,7 @@ class AlienContact(BaseModel):
     signal_strength: float = Field(ge=0.0, le=10.0)
     duration_minutes: int = Field(ge=1, le=1440)
     witness_count: int = Field(ge=1, le=100)
-    message_received: str | None = Field(max_length=500)
+    message_received: str | None = Field(default=None, max_length=500)
     is_verified: bool = False
 
     @model_validator(mode='after')
@@ -51,7 +51,7 @@ received messages")
 
 def print_contact_infos(contact: AlienContact) -> None:
     print(f"ID: {contact.contact_id}")
-    print(f"Type: {contact.contact_type}")
+    print(f"Type: {contact.contact_type.value}")
     print(f"Location: {contact.location}")
     print(f"Signal: {contact.signal_strength}/10")
     print(f"Duration: {contact.duration_minutes} minutes")
@@ -60,55 +60,104 @@ def print_contact_infos(contact: AlienContact) -> None:
         print(f"Message: {contact.message_received}")
 
 
-def contact_creation(data: dict[str, datetime | str | ContactType | float |
-                                int | bool]) -> AlienContact:
+def alien_contact() -> None:
     try:
-        contact = AlienContact(
-            contact_id=data["contact_id"],
-            timestamp=data["timestamp"],
-            location=data["location"],
-            contact_type=data["contact_type"],
-            signal_strength=data["signal_strength"],
-            duration_minutes=data["duration_minutes"],
-            witness_count=data["witness_count"],
-            message_received=data["message_received"]
+        contact_infos = AlienContact(
+            contact_id="AC_2024_001",
+            timestamp=datetime.now(),
+            location="Area 51, Nevada",
+            contact_type=ContactType.RADIO,
+            signal_strength=8.5,
+            duration_minutes=45,
+            witness_count=5,
+            message_received="Greetings from Zeta Reticuli"
         )
+        print_contact_infos(contact_infos)
     except ValidationError as e:
         for error in e.errors():
             clean_error = error['msg'].replace('Value error, ', '')
             print(clean_error)
-        sys.exit(2)
-    return contact
-
-
-def alien_contact() -> None:
-    contact_infos = {
-        "contact_id": "AC_2024_001",
-        "timestamp": datetime.now(),
-        "location": "Area 51, Nevada",
-        "contact_type": ContactType.RADIO,
-        "signal_strength": 8.5,
-        "duration_minutes": 45,
-        "witness_count": 5,
-        "message_received": "Greetings from Zeta Reticuli"
-    }
-    contact = contact_creation(contact_infos)
-    print_contact_infos(contact)
     print()
 
     print("======================================")
     print("Expected validation error:")
-    contact_infos = {
-        "contact_id": "AC_2024_001",
-        "timestamp": datetime.now(),
-        "location": "Area 51, Nevada",
-        "contact_type": ContactType.TELEPATHIC,
-        "signal_strength": 8.5,
-        "duration_minutes": 45,
-        "witness_count": 2,
-        "message_received": "Greetings from Zeta Reticuli"
-    }
-    contact = contact_creation(contact_infos)
+    try:
+        contact_infos = AlienContact(
+            contact_id="AC_2024_001",
+            timestamp=datetime.now(),
+            location="Area 51, Nevada",
+            contact_type=ContactType.TELEPATHIC,
+            signal_strength=8.5,
+            duration_minutes=45,
+            witness_count=2,
+            message_received="Greetings from Zeta Reticuli"
+        )
+        print_contact_infos(contact_infos)
+    except ValidationError as e:
+        for error in e.errors():
+            clean_error = error['msg'].replace('Value error, ', '')
+            print(clean_error)
+    print()
+
+    print("======================================")
+    print("Expected validation error:")
+    try:
+        contact_infos = AlienContact(
+            contact_id="AL_2024_001",
+            timestamp=datetime.now(),
+            location="Area 51, Nevada",
+            contact_type=ContactType.RADIO,
+            signal_strength=8.5,
+            duration_minutes=45,
+            witness_count=5,
+            message_received="Greetings from Zeta Reticuli"
+        )
+        print_contact_infos(contact_infos)
+    except ValidationError as e:
+        for error in e.errors():
+            clean_error = error['msg'].replace('Value error, ', '')
+            print(clean_error)
+    print()
+
+    print("======================================")
+    print("Expected validation error:")
+    try:
+        contact_infos = AlienContact(
+            contact_id="AC_2024_001",
+            timestamp=datetime.now(),
+            location="Area 51, Nevada",
+            contact_type=ContactType.PHYSICAL,
+            signal_strength=8.5,
+            duration_minutes=45,
+            witness_count=5,
+            message_received="Greetings from Zeta Reticuli",
+            is_verified=False
+        )
+        print_contact_infos(contact_infos)
+    except ValidationError as e:
+        for error in e.errors():
+            clean_error = error['msg'].replace('Value error, ', '')
+            print(clean_error)
+    print()
+
+    print("======================================")
+    print("Expected validation error:")
+    try:
+        contact_infos = AlienContact(
+            contact_id="AC_2024_001",
+            timestamp=datetime.now(),
+            location="Area 51, Nevada",
+            contact_type=ContactType.TELEPATHIC,
+            signal_strength=8.5,
+            duration_minutes=45,
+            witness_count=4
+        )
+        print_contact_infos(contact_infos)
+    except ValidationError as e:
+        for error in e.errors():
+            clean_error = error['msg'].replace('Value error, ', '')
+            print(clean_error)
+    print()
 
 
 if __name__ == "__main__":

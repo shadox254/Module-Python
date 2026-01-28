@@ -9,13 +9,13 @@ except ModuleNotFoundError:
 
 class SpaceStation(BaseModel):
     station_id: str = Field(min_length=3, max_length=10)
-    name: str = Field(min_char=1, max_char=50)
-    crew_size: int = Field(min_size=1, max_size=20)
-    power_level: float = Field(min_percent=0.00, max_percent=100.0)
-    oxygen_level: float = Field(min_percent=0.00, max_percent=100.0)
-    last_maintenance = datetime
+    name: str = Field(min_length=1, max_length=50)
+    crew_size: int = Field(ge=1, le=20)
+    power_level: float = Field(ge=0.00, le=100.0)
+    oxygen_level: float = Field(ge=0.00, le=100.0)
+    last_maintenance: datetime
     is_operational: bool = True
-    notes: str | None = Field(min_lenght=0, max_length=200)
+    notes: str | None = Field(default=None, max_length=200)
 
 
 def station_creation(data: dict[str, int | str | float | datetime
@@ -47,30 +47,24 @@ def station_creation(data: dict[str, int | str | float | datetime
     except ValidationError as e:
         print("Expected validation error:")
         for error in e.errors():
-            field = " -> ".join(map(str, error['loc']))
+            field = "".join(map(str, error['loc']))
             print(f"'{field}': {error['msg']}")
         return None
 
 
 def print_station(station: SpaceStation) -> None:
     print(f"ID: {station.station_id}")
-
     print(f"Name: {station.name}")
-
     if station.crew_size == 1:
         print(f"Crew: {station.crew_size} person")
     else:
         print(f"Crew: {station.crew_size} people")
-
     print(f"Power: {station.power_level}")
-
     print(f"Oxygen: {station.oxygen_level}")
-
     if not station.is_operational:
         print(f"Status: {False}")
     else:
         print(f"Status: {True}")
-
     if station.notes is not None:
         print(f"Notes: {station.notes}")
 
@@ -97,11 +91,11 @@ def main() -> None:
     station_infos = {
         "station_id": "ERROR001",
         "name": "International ERROR Station",
-        "crew_size": 0,
-        "power_level": 101.3,
-        "oxygen_level": -1.3,
-        "last_maintenance": "yes",
-        "is_operational": "Trou"
+        "crew_size": 100,
+        "power_level": 50.0,
+        "oxygen_level": 1.3,
+        "last_maintenance": 1769499506,
+        "is_operational": True
     }
     station = station_creation(station_infos)
     if station is None:
