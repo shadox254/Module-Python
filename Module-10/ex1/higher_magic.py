@@ -2,7 +2,7 @@ from typing import Any, Callable
 
 
 def spell_combiner(spell1: Callable, spell2: Callable) -> Callable:
-    def wrapper(*args: Any, **kwargs: Any):
+    def wrapper(*args: Any, **kwargs: Any) -> tuple:
         result_spell1 = spell1(*args, **kwargs)
         result_spell2 = spell2(*args, **kwargs)
         return (result_spell1, result_spell2)
@@ -10,7 +10,7 @@ def spell_combiner(spell1: Callable, spell2: Callable) -> Callable:
 
 
 def power_amplifier(base_spell: Callable, multiplier: int) -> Callable:
-    def wrapper(*args: Any, **kwargs: Any):
+    def wrapper(*args: Any, **kwargs: Any) -> int:
         spell_power = base_spell(*args, **kwargs)
         new_power = spell_power * multiplier
         return new_power
@@ -18,7 +18,7 @@ def power_amplifier(base_spell: Callable, multiplier: int) -> Callable:
 
 
 def conditional_caster(condition: Callable, spell: Callable) -> Callable:
-    def wrapper(*args: Any, **kwargs: Any):
+    def wrapper(*args: Any, **kwargs: Any) -> callable | str:
         if not condition(*args, **kwargs):
             return "Spell fizzled"
         return spell(*args, **kwargs)
@@ -26,7 +26,7 @@ def conditional_caster(condition: Callable, spell: Callable) -> Callable:
 
 
 def spell_sequence(spells: list[callable]) -> callable:
-    def wrapper(*args: Any, **kwargs: Any):
+    def wrapper(*args: Any, **kwargs: Any) -> list:
         result = []
         for spell in spells:
             result.append(spell(*args, **kwargs))
@@ -34,7 +34,7 @@ def spell_sequence(spells: list[callable]) -> callable:
     return wrapper
 
 
-def higher_magic():
+def higher_magic() -> None:
     def fireball(target: str) -> str:
         return f"Fireball hits {target}"
 
@@ -62,7 +62,7 @@ def higher_magic():
             return False
         return True
 
-    def spell(random: Any):
+    def spell(random: Any) -> str:
         return "Spell created"
 
     print("Testing conditionnal caster...")

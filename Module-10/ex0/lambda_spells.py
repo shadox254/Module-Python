@@ -21,7 +21,7 @@ def mage_stats(mages: list[dict]) -> dict:
     }
 
 
-def lambda_spells():
+def lambda_spells() -> None:
 
     print("Testing artifact sorter...")
     artifacts_list = [
