@@ -1,0 +1,15 @@
+from os import system
+
+system('touch ft_water_reminder.c')
+system('echo "#include <stdio.h>" > ft_water_reminder.c')
+system('echo "int main(){" >> ft_water_reminder.c')
+system('echo "printf(\\"Days since last watering: \\");" >> ft_water_reminder.c')
+system('echo "int f; scanf(\\"%d\\", &f);" >> ft_water_reminder.c')
+system('echo "if(f > 2){" >> ft_water_reminder.c')
+system('echo "printf(\\"Water the plants!\\"); return 0;}" >> ft_water_reminder.c')
+system('echo "else{" >> ft_water_reminder.c')
+system('echo "int day = 3 - f;" >> ft_water_reminder.c')
+system('echo "printf(\\"Days since last watering: %d\\", day); return 0;}}" >> ft_water_reminder.c')
+system('cc ft_water_reminder.c')
+system('./a.out')
+system('rm ft_water_reminder.c a.out')
