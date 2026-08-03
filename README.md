@@ -27,6 +27,6 @@ This repository contains a series of learning modules (`Module-00` to `Module-10
 Each module contains its own exercises. Navigate to the module folder and run the relevant Python script:
  
 ```bash
-cd Module-XX
+cd Module-XX/exXX
 python3 script_name.py
 ```
